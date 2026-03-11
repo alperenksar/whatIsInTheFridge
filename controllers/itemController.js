@@ -7,8 +7,8 @@ const addItem = async(req,res) => {
       
     try{
         const result = await query(
-            'INSERT INTO items (name, description,quantity,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [name, description, quantity, expiry_date, owner_id]
+            'INSERT INTO items (name, description,quantity,unit,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
+            [name, description, quantity,unit,expiry_date, owner_id]
         );
         res.status(201).json(result.rows[0]);
         console.log(owner_id);
@@ -29,12 +29,7 @@ const getItems = async (req, res) => {
   }
 };
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 module.exports = { addItem, getItems };
-=======
-=======
->>>>>>> Stashed changes
 const deleteItem = async (req,res) =>{
   
 
@@ -54,10 +49,4 @@ const deleteItem = async (req,res) =>{
 }
 
 
-
-<<<<<<< Updated upstream
 module.exports = { addItem, getItems ,deleteItem};
->>>>>>> Stashed changes
-=======
-module.exports = { addItem, getItems ,deleteItem};
->>>>>>> Stashed changes

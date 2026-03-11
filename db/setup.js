@@ -1,53 +1,46 @@
 const { query } = require('../config/database');
 
 
-const resetAndSetup = async () => {
+const restartDatabase = async () => {
     try {
-        console.log("Reset the database");
+        console.log("DATABASE RESTART ");
 
-        
+        // 1. ADIM: Her şeyi kökten sil (Tabloları imha et)
         await query('DROP TABLE IF EXISTS items CASCADE');
         await query('DROP TABLE IF EXISTS users CASCADE');
-        console.log("database is cleaned!!!");
+        console.log("Eski tablolar ve tüm veriler imha edildi.");
 
-        process.exit();
-    } catch (err) {
-        console.error("There is an error with restart", err);
-        process.exit(1);
-    }
-};
-
-resetAndSetup();
-
-const createTables = async () => {
-    try {
-        // Users table
+        // 2. ADIM: Users Tablosunu Sıfırdan Kur
         await query(`
-            CREATE TABLE IF NOT EXISTS users (
+            CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
                 username VARCHAR(50) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL
             );
         `);
+        console.log("'users' tablosu yeniden inşa edildi.");
 
-        // Products (Things) Table 
+        // 3. ADIM: Items Tablosunu Sıfırdan Kur
         await query(`
-            CREATE TABLE IF NOT EXISTS items (
+            CREATE TABLE items (
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
                 description TEXT,
-                quantity VARCHAR(50), -- Gramaj bilgisi [cite: 88]
-                expiry_date DATE, -- Son kullanma tarihi
+                unit TEXT,
+                quantity VARCHAR(50),
+                expiry_date DATE,
                 owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
             );
         `);
+        console.log("'items' tablosu yeniden inşa edildi.");
 
-        console.log("Tablolar başarıyla oluşturuldu! ");
+        console.log(" DATABASE RESTART TAMAMLANDI!");
         process.exit();
     } catch (err) {
-        console.error("Tablo oluşturulurken hata çıktı: ", err);
+        console.error("Restart sırasında hata oluştu:", err.message);
         process.exit(1);
     }
 };
 
-createTables();
+restartDatabase();
+
