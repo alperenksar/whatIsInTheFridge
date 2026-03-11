@@ -89,12 +89,12 @@ const getExpiringItems = async (req, res) => {
 };
 
 
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems };
+
 const filterWithName = async(req,res) => {
 
-
     const { name } = req.query; 
-
-
     try{
         const result = await query(
             
@@ -107,15 +107,27 @@ const filterWithName = async(req,res) => {
         );
         res.json(result.rows);
     }
-    
-
     catch(err){
         res.status(500).json({ error: "There is an error with filter." + " " + err.message});
     }
 }
 
+const filterWithCategory = async(req,res) =>{
+    const { category } = req.query;
+    try{
+        const result = await query(
+            'SELECT * FROM items WHERE category ILIKE $1',
+            [`%${category}%`]
 
-module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName};
+        );
+        res.json(result.rows);
+    }catch(err){
+        res.status(500).json({error:"There is an error with filter."+" "+err.message})
+    }
+}
+
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory};
 
 
 
