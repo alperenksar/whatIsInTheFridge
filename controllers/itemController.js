@@ -61,11 +61,11 @@ const updateItem = async (req, res) => {
         );
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: "Ürün bulunamadı veya yetkiniz yok." });
+            return res.status(404).json({ error: "That is not a product" });
         }
-        res.json({ message: "Ürün güncellendi! ✅", item: result.rows[0] });
+        res.json({ message: "Product is updated", item: result.rows[0] });
     } catch (err) {
-        res.status(500).json({ error: "Güncelleme hatası." + " " + err.message});
+        res.status(500).json({ error: "There is an issue about updating" + " " + err.message});
     }
 };
 
