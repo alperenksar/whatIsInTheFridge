@@ -90,9 +90,9 @@ const getExpiringItems = async (req, res) => {
 };
 
 
-<<<<<<< Updated upstream
+
 module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems };
-=======
+
 const filterWithName = async(req,res) => {
 
     const { name } = req.query; 
@@ -129,10 +129,6 @@ const filterWithCategory = async(req,res) =>{
 
 
 module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory};
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 
 
