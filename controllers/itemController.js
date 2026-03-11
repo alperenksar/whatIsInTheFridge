@@ -71,7 +71,6 @@ const updateItem = async (req, res) => {
 
 const getExpiringItems = async (req, res) => {
     try {
-       
         const result = await query(
             `SELECT * FROM items 
              WHERE name = $1 
@@ -90,7 +89,33 @@ const getExpiringItems = async (req, res) => {
 };
 
 
-module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems };
+const filterWithName = async(req,res) => {
+
+
+    const { name } = req.query; 
+
+
+    try{
+        const result = await query(
+            
+           
+
+            'SELECT * FROM items WHERE name ILIKE $1',
+            [`%${name}%`]
+           
+            
+        );
+        res.json(result.rows);
+    }
+    
+
+    catch(err){
+        res.status(500).json({ error: "There is an error with filter." + " " + err.message});
+    }
+}
+
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName};
 
 
 
