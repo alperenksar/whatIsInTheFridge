@@ -71,7 +71,6 @@ const updateItem = async (req, res) => {
 
 const getExpiringItems = async (req, res) => {
     try {
-       
         const result = await query(
             `SELECT * FROM items 
              WHERE name = $1 
