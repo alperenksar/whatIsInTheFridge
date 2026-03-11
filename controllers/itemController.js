@@ -2,13 +2,13 @@ const { error } = require('node:console');
 const {query} = require('../config/database');
 
 const addItem = async(req,res) => {
-    const {name , description , quantity,unit ,expiry_date ,owner_id} = req.body;
+    const {name,image,category, description, quantity,unit,expiry_date, owner_id} = req.body;
 
       
     try{
         const result = await query(
-            'INSERT INTO items (name, description,quantity,unit,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-            [name, description, quantity,unit,expiry_date, owner_id]
+            'INSERT INTO items (name,image,category ,description,quantity,unit,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+            [name,image,category, description, quantity,unit,expiry_date, owner_id]
         );
         res.status(201).json(result.rows[0]);
         console.log(owner_id);
@@ -69,5 +69,28 @@ const updateItem = async (req, res) => {
     }
 };
 
+const getExpiringItems = async (req, res) => {
+    try {
+       
+        const result = await query(
+            `SELECT * FROM items 
+             WHERE name = $1 
+             AND expiry_date <= CURRENT_DATE + INTERVAL '3 days' 
+             ORDER BY expiry_date ASC`, 
+            ["Banana"]
+        );
+        
+        res.json({
+            count: result.rows.length,
+            items: result.rows
+        });
+    } catch (err) {
+        res.status(500).json({ error: "Filtreleme sırasında hata oluştu." + " " + err.message});
+    }
+};
 
-module.exports = { addItem, getItems ,deleteItem ,updateItem};
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems };
+
+
+

@@ -25,6 +25,8 @@ const restartDatabase = async () => {
             CREATE TABLE items (
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
+                image TEXT,
+                category TEXT,
                 description TEXT,
                 unit TEXT,
                 quantity VARCHAR(50),
