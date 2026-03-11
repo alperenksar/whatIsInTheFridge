@@ -29,10 +29,9 @@ const getItems = async (req, res) => {
   }
 };
 
-module.exports = { addItem, getItems };
-const deleteItem = async (req,res) =>{
-  
 
+
+const deleteItem = async (req,res) =>{
     try {
         const result = await query(
             'DELETE FROM items WHERE name = $1 RETURNING *',
