@@ -30,8 +30,11 @@ const getItems = async (req, res) => {
 };
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 module.exports = { addItem, getItems };
 =======
+=======
+>>>>>>> Stashed changes
 const deleteItem = async (req,res) =>{
   
 
@@ -52,5 +55,9 @@ const deleteItem = async (req,res) =>{
 
 
 
+<<<<<<< Updated upstream
+module.exports = { addItem, getItems ,deleteItem};
+>>>>>>> Stashed changes
+=======
 module.exports = { addItem, getItems ,deleteItem};
 >>>>>>> Stashed changes
