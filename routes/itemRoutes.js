@@ -3,8 +3,8 @@ const router = express.Router();
 const { addItem, getItems } = require('../controllers/itemController');
 
 
-// Bu rotalar artık verifyToken ile korunuyor!
-router.post('/', addItem);
-router.get('/', getItems);
+
+router.post('/addItem', addItem);
+router.get('/getItems', getItems);
 
 module.exports = router;

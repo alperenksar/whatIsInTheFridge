@@ -2,16 +2,16 @@ const { error } = require('node:console');
 const {query} = require('../config/database');
 
 const addItem = async(req,res) => {
-    const {name , description , quantity, expiry_date} = req.body;
-    const ownerid = req.user.id;
-    
-    
+    const {name , description , quantity, expiry_date ,owner_id} = req.body;
+
+      
     try{
         const result = await query(
-            'INSERT INTO items (name, description,quantity,expiry_date,ownerid) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [name, description, quantity, expiry_date, ownerid]
+            'INSERT INTO items (name, description,quantity,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+            [name, description, quantity, expiry_date, owner_id]
         );
         res.status(201).json(result.rows[0]);
+        console.log(owner_id);
     }catch(err){
         res.status(500).json({error:"Item didnt added" + err.message});
     }
@@ -22,10 +22,10 @@ const addItem = async(req,res) => {
 
 const getItems = async (req, res) => {
   try {
-    const result = await query('SELECT * FROM items WHERE owner_id = $1', [req.user.id]);
+    const result = await query('SELECT * FROM items WHERE owner_id = 2');
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: "Ürünler getirilirken hata oluştu." });
+    res.status(500).json({ error: "There is an issue with getting the items" });
   }
 };
 

@@ -1,5 +1,24 @@
 const { query } = require('../config/database');
 
+
+const resetAndSetup = async () => {
+    try {
+        console.log("Reset the database");
+
+        
+        await query('DROP TABLE IF EXISTS items CASCADE');
+        await query('DROP TABLE IF EXISTS users CASCADE');
+        console.log("database is cleaned!!!");
+
+        process.exit();
+    } catch (err) {
+        console.error("There is an error with restart", err);
+        process.exit(1);
+    }
+};
+
+resetAndSetup();
+
 const createTables = async () => {
     try {
         // Users table
