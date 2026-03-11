@@ -90,7 +90,46 @@ const getExpiringItems = async (req, res) => {
 };
 
 
+<<<<<<< Updated upstream
 module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems };
+=======
+const filterWithName = async(req,res) => {
+
+    const { name } = req.query; 
+    try{
+        const result = await query(
+            
+           
+
+            'SELECT * FROM items WHERE name ILIKE $1',
+            [`%${name}%`]
+           
+            
+        );
+        res.json(result.rows);
+    }
+    catch(err){
+        res.status(500).json({ error: "There is an error with filter." + " " + err.message});
+    }
+}
+
+const filterWithCategory = async(req,res) =>{
+    const { category } = req.query;
+    try{
+        const result = await query(
+            'SELECT * FROM items WHERE category ILIKE $1',
+            [`%${category}%`]
+
+        );
+        res.json(result.rows);
+    }catch(err){
+        res.status(500).json({error:"There is an error with filter."+" "+err.message})
+    }
+}
+
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory};
+>>>>>>> Stashed changes
 
 
 
