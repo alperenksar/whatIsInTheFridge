@@ -72,4 +72,16 @@ const register = async (req,res) => {
     }
 };
 
-module.exports = {register ,login};
+
+
+const getUsers = async (req, res) => {
+  try {
+    const result = await query(`SELECT * FROM users`);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "There is an issue with getting the items" });
+    console.log(err);
+  }
+};
+
+module.exports = {register ,login ,getUsers};
