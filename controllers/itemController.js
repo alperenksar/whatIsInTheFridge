@@ -129,6 +129,9 @@ const filterWithCategory = async(req,res) =>{
 
 
 module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory};
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 

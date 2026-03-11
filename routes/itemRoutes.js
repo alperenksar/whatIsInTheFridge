@@ -7,6 +7,9 @@ const {getExpiringItems} = require('../controllers/itemController');
 =======
 const {filterWithName} = require('../controllers/itemController');
 const {filterWithCategory} = require('../controllers/itemController');
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
@@ -21,6 +24,9 @@ router.get('/getExpiringItems', getExpiringItems);
 =======
 router.get('/filterWithName', filterWithName);
 router.get('/filterWithCategory', filterWithCategory);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
