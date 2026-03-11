@@ -45,7 +45,29 @@ const deleteItem = async (req,res) =>{
     } catch (err) {
         res.status(500).json({ error: "There is an issue about deleting." + " " + err.message });
     }
-}
+};
 
 
-module.exports = { addItem, getItems ,deleteItem};
+const updateItem = async (req, res) => {
+    //const { id } = req.params;
+    let productName = "Milk"
+    const { name, description, quantity, unit,expiry_date } = req.body;
+    console.log(req.body);
+
+    try {
+        const result = await query(
+            'UPDATE items SET name = $1, description = $2, quantity = $3, unit = $4 ,expiry_date = $5 WHERE name=$6 RETURNING *',
+            [name, description, quantity, unit,expiry_date,productName]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Ürün bulunamadı veya yetkiniz yok." });
+        }
+        res.json({ message: "Ürün güncellendi! ✅", item: result.rows[0] });
+    } catch (err) {
+        res.status(500).json({ error: "Güncelleme hatası." + " " + err.message});
+    }
+};
+
+
+module.exports = { addItem, getItems ,deleteItem ,updateItem};
