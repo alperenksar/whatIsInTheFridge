@@ -7,8 +7,8 @@ const addItem = async(req,res) => {
       
     try{
         const result = await query(
-            'INSERT INTO items (name, description,quantity,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [name, description, quantity, expiry_date, owner_id]
+            'INSERT INTO items (name, description,quantity,unit,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
+            [name, description, quantity,unit,expiry_date, owner_id]
         );
         res.status(201).json(result.rows[0]);
         console.log(owner_id);
@@ -28,5 +28,7 @@ const getItems = async (req, res) => {
     res.status(500).json({ error: "There is an issue with getting the items" });
   }
 };
+
+
 
 module.exports = { addItem, getItems };
