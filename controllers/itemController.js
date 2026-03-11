@@ -50,14 +50,14 @@ const deleteItem = async (req,res) =>{
 
 const updateItem = async (req, res) => {
     //const { id } = req.params;
-    let productName = "Milk"
-    const { name, description, quantity, unit,expiry_date } = req.body;
+    let productName = "Banana"
+    const { name,image,category ,description,quantity,unit,expiry_date } = req.body;
     console.log(req.body);
 
     try {
         const result = await query(
-            'UPDATE items SET name = $1, description = $2, quantity = $3, unit = $4 ,expiry_date = $5 WHERE name=$6 RETURNING *',
-            [name, description, quantity, unit,expiry_date,productName]
+            'UPDATE items SET name = $1,image=$2,category=$3 ,description = $4, quantity = $5, unit = $6 ,expiry_date = $7 WHERE name=$8 RETURNING *',
+            [name,image,category,description,quantity, unit,expiry_date,productName]
         );
 
         if (result.rows.length === 0) {
