@@ -1,6 +1,8 @@
 const {query} = require("../config/database");
 const bcrypt = require('bcrypt');
 
+
+
 const register = async (req,res) => {
     const {username , password} = req.body;
 
@@ -9,7 +11,7 @@ const register = async (req,res) => {
 
         const newUser = await query(
             'INSERT INTO users (username, password) VALUES ($1,$2) RETURNING id, username',
-            [username, hashedPassword] 
+            [username, cryptedPassword] 
         );
 
         res.status(201).json({
