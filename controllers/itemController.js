@@ -89,21 +89,15 @@ const getExpiringItems = async (req, res) => {
 };
 
 
-
-module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems };
-
 const filterWithName = async(req,res) => {
 
     const { name } = req.query; 
     try{
         const result = await query(
-            
-           
-
+                  
             'SELECT * FROM items WHERE name ILIKE $1',
             [`%${name}%`]
            
-            
         );
         res.json(result.rows);
     }

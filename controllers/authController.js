@@ -68,7 +68,7 @@ const register = async (req,res) => {
         });
     }
     catch(err){
-        res.status(500).json({error:"Error with newuser."});
+        res.status(500).json({error:"Error with newuser. " + err.message});
     }
 };
 
