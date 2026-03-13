@@ -94,7 +94,8 @@ const getExpiringItems = async (req, res) => {
 
 const filterWithName = async(req,res) => {
 
-    const { name } = req.query; 
+    let { name } = req.query; 
+    name ="Alperen";
     try{
         const result = await query(
                   
@@ -124,7 +125,22 @@ const filterWithCategory = async(req,res) =>{
 }
 
 
-module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory};
+const getRecentlyBought = async(req,res) =>{
+    try{
+        const result = await query(
+            "SELECT * FROM items ORDER BY id DESC LIMIT 20"
+        );
+        res.status(200).json(result.rows);
+        
+    }
+    catch(err){
+        console.log("There is an error about getting the datas" , err.message);
+        res.status(500).json({error:"Couldnt take the datas"});
+    }
+};
+
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory ,getRecentlyBought};
 
 
 
