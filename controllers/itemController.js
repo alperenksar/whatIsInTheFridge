@@ -2,16 +2,16 @@ const { error } = require('node:console');
 const {query} = require('../config/database');
 
 const addItem = async(req,res) => {
-    const {name,image,category, description, quantity,unit,expiry_date, owner_id} = req.body;
-
-      
+    const {name,image,category, description, quantity,unit,expiry_date,bought_date,price,owner_id} = req.body;
+    let updated_date = new Date().toISOString().split('T')[0];
+    
     try{
         const result = await query(
-            'INSERT INTO items (name,image,category ,description,quantity,unit,expiry_date,owner_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
-            [name,image,category, description, quantity,unit,expiry_date, owner_id]
+            'INSERT INTO items (name,image,category ,description,quantity,unit,expiry_date,bought_date,updated_date,price,owner_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *',
+            [name,image,category, description, quantity,unit,expiry_date,bought_date,updated_date,price,owner_id]
         );
         res.status(201).json(result.rows[0]);
-        console.log(owner_id);
+     
     }catch(err){
         res.status(500).json({error:"Item didnt added " + err.message});
     }
@@ -32,10 +32,12 @@ const getItems = async (req, res) => {
 
 
 const deleteItem = async (req,res) =>{
+    const { id}  = req.params;
+    console.log(id);
     try {
         const result = await query(
-            'DELETE FROM items WHERE name = $1 RETURNING *',
-            ["Milk"]
+            'DELETE FROM items WHERE id = $1 RETURNING *',
+            [id]
         );
 
         if (result.rows.length === 0) {
@@ -49,15 +51,16 @@ const deleteItem = async (req,res) =>{
 
 
 const updateItem = async (req, res) => {
-    //const { id } = req.params;
-    let productName = "Banana"
-    const { name,image,category ,description,quantity,unit,expiry_date } = req.body;
+    const { id } = req.params;
+   
+    const { name,image,category,description, quantity,unit,expiry_date,price} = req.body;
+    let updated_date = new Date().toISOString().split('T')[0];
     console.log(req.body);
 
     try {
         const result = await query(
-            'UPDATE items SET name = $1,image=$2,category=$3 ,description = $4, quantity = $5, unit = $6 ,expiry_date = $7 WHERE name=$8 RETURNING *',
-            [name,image,category,description,quantity, unit,expiry_date,productName]
+            'UPDATE items SET name = $1,image=$2,category=$3 ,description = $4, quantity = $5, unit = $6 ,expiry_date = $7 , updated_date = $8 , price=$9 WHERE id=$10 RETURNING *',
+            [name,image,category,description,quantity, unit,expiry_date,updated_date,price,id]
         );
 
         if (result.rows.length === 0) {
@@ -73,10 +76,10 @@ const getExpiringItems = async (req, res) => {
     try {
         const result = await query(
             `SELECT * FROM items 
-             WHERE name = $1 
+             WHERE expiry_date >= CURRENT_DATE 
              AND expiry_date <= CURRENT_DATE + INTERVAL '3 days' 
-             ORDER BY expiry_date ASC`, 
-            ["Banana"]
+             ORDER BY expiry_date ASC`
+           
         );
         
         res.json({

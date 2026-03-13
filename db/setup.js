@@ -5,12 +5,11 @@ const restartDatabase = async () => {
     try {
         console.log("DATABASE RESTART ");
 
-        // 1. ADIM: Her şeyi kökten sil (Tabloları imha et)
         await query('DROP TABLE IF EXISTS items CASCADE');
         await query('DROP TABLE IF EXISTS users CASCADE');
         console.log("Eski tablolar ve tüm veriler imha edildi.");
 
-        // 2. ADIM: Users Tablosunu Sıfırdan Kur
+        
         await query(`
             CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
@@ -31,6 +30,9 @@ const restartDatabase = async () => {
                 unit TEXT,
                 quantity VARCHAR(50),
                 expiry_date DATE,
+                bought_date DATE,
+                updated_date DATE,
+                price VARCHAR(50),
                 owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
             );
         `);

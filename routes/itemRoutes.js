@@ -12,8 +12,8 @@ const {filterWithCategory} = require('../controllers/itemController');
 
 router.post('/addItem', addItem);
 router.get('/getItems', getItems);
-router.delete('/deleteItem', deleteItem);
-router.put('/updateItem', updateItem);
+router.delete('/deleteItem/:id', deleteItem);
+router.put('/updateItem/:id', updateItem);
 router.get('/getExpiringItems', getExpiringItems);
 router.get('/filterWithName', filterWithName);
 router.get('/filterWithCategory', filterWithCategory);
