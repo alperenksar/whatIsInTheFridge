@@ -140,7 +140,22 @@ const getRecentlyBought = async(req,res) =>{
 };
 
 
-module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory ,getRecentlyBought};
+
+const getRecentlyUpdated = async(req,res) => {
+    try{
+        const result = await query(
+            "SELECT * FROM items ORDER BY updated_date DESC LIMIT 10"
+        );
+        res.status(200).json(result.rows);
+    }
+    catch(err){
+        console.log("There is an error about recentlyUpdated method" , err.message);
+        res.status(500).json({error:"Couldnt get the recently_updated"});
+    }
+};
+
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory ,getRecentlyBought , getRecentlyUpdated};
 
 
 
