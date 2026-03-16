@@ -8,6 +8,7 @@ const {filterWithName} = require('../controllers/itemController');
 const {filterWithCategory} = require('../controllers/itemController');
 const {getRecentlyBought} = require('../controllers/itemController');
 const {getRecentlyUpdated} = require('../controllers/itemController');
+const {getItem} = require('../controllers/itemController');
 
 
 
@@ -21,6 +22,7 @@ router.get('/filterWithName', filterWithName);
 router.get('/filterWithCategory', filterWithCategory);
 router.get('/getRecentlyBought', getRecentlyBought);
 router.get('/getRecentlyUpdated', getRecentlyUpdated);
+router.get('/getItem/:id', getItem);
 
 
 module.exports = router;
