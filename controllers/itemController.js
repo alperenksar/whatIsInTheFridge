@@ -155,7 +155,22 @@ const getRecentlyUpdated = async(req,res) => {
 };
 
 
-module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory ,getRecentlyBought , getRecentlyUpdated};
+const getItem = async (req,res) =>{
+
+    const { id } = req.params;
+    try {
+    const result = await query('SELECT * FROM items WHERE id=$1',
+        [2]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "There is an issue with getting the items" });
+  }
+
+}
+
+
+module.exports = { addItem, getItems, updateItem, deleteItem, getExpiringItems , filterWithName , filterWithCategory ,getRecentlyBought , getRecentlyUpdated ,getItem};
 
 
 
