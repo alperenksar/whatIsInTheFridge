@@ -111,7 +111,8 @@ const filterWithName = async(req,res) => {
 }
 
 const filterWithCategory = async(req,res) =>{
-    const { category } = req.query;
+    let { category } = req.query;
+    
     try{
         const result = await query(
             'SELECT * FROM items WHERE category ILIKE $1',
@@ -160,7 +161,7 @@ const getItem = async (req,res) =>{
     const { id } = req.params;
     try {
     const result = await query('SELECT * FROM items WHERE id=$1',
-        [2]
+        [5]
     );
     res.json(result.rows);
   } catch (err) {
