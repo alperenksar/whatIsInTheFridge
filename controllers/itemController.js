@@ -82,8 +82,7 @@ const getExpiringItems = async (req, res) => {
            
         );
         
-        res.json({
-            count: result.rows.length,
+        res.json({ 
             items: result.rows
         });
     } catch (err) {
@@ -114,11 +113,13 @@ const filterWithCategory = async(req,res) =>{
     let { category } = req.query;
     
     try{
-        const result = await query(
-            'SELECT * FROM items WHERE category ILIKE $1',
-            [`%${category}%`]
+        let result;
+        if(category === "All" || !category){
+            result = await query('SELECT * FROM items');
+        }else {
+            await query('SELECT * FROM items WHERE category ILIKE $1',[`%${category}%`]);
 
-        );
+        }
         res.json(result.rows);
     }catch(err){
         res.status(500).json({error:"There is an error with filter."+" "+err.message})
