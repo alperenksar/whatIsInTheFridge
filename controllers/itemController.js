@@ -117,7 +117,7 @@ const filterWithCategory = async(req,res) =>{
         if(category === "All" || !category){
             result = await query('SELECT * FROM items');
         }else {
-            await query('SELECT * FROM items WHERE category ILIKE $1',[`%${category}%`]);
+           result = await query('SELECT * FROM items WHERE category ILIKE $1',[`%${category}%`]);
 
         }
         res.json(result.rows);
